@@ -9,4 +9,10 @@ class Tag extends Model
 {
     /** @use HasFactory<\Database\Factories\TagFactory> */
     use HasFactory;
+    protected $fillable=["name","slug"];
+
+    public function products(){
+        return $this->belongsToMany(Product::class);//product_tag pivotu var 
+        
+    }
 }
