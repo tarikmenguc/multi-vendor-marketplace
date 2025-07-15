@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Cart;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,15 +11,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CartFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Cart::class;
+
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::inRandomOrder()->value('id')
+                        ?? User::factory()->create()->id,
         ];
     }
 }

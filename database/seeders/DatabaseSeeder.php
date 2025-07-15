@@ -21,6 +21,7 @@ $this->call([
     CategorySeeder::class,
     TagSeeder::class,
     ProductSeeder::class,
+    CartSeeder::class,  
     ]);
         User::factory()->create([
             'name' => 'Test User',
