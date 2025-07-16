@@ -36,11 +36,11 @@ jobs:
     - name: Copy .env.testing
       run: cp .env.testing .env
 
-    - name: Generate app key
-      run: php artisan key:generate
+    
+     
 
-    - name: Clear config cache
-      run: php artisan config:clear
+    
+      
 
 
     - name: Run migrations
