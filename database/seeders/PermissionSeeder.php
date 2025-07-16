@@ -23,5 +23,8 @@ class PermissionSeeder extends Seeder
         // Admin rolüne tüm izinleri verdin
         $admin = \Spatie\Permission\Models\Role::where('name', 'admin')->first();
         $admin?->givePermissionTo($perms);
+
+        $vendor = \Spatie\Permission\Models\Role::where('name', 'vendor')->first();
+        $vendor?->givePermissionTo(['product.create', 'product.update', 'product.delete', 'product.view']);
     }
 }
