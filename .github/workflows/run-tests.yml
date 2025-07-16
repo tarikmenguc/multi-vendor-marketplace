@@ -36,7 +36,11 @@ jobs:
     - name: Copy .env.testing
       run: cp .env.testing .env
 
-    
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Build assets (Vite)
+      run: npm run build
      
 
     
