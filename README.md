@@ -1,61 +1,114 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+---
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 🛒 Multi-Vendor Marketplace – Laravel 12 Backend & API
 
-## About Laravel
+Bu proje, Laravel 12 kullanılarak geliştirilen **çok satıcılı bir e-ticaret sisteminin yalnızca backend ve API kısmını** kapsar.
+Frontend olarak Breeze (Vue + Inertia) yapısı kuruludur, ancak bu çalışma **özellikle API, iş mantığı (service layer) ve test süreçlerine** odaklanır.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🎯 Amaç
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* Gerçek bir projede backend tarafında **temiz, modüler ve test edilebilir Laravel mimarisi** kurmak.
+* Laravel’in gelişmiş özelliklerini (Sanctum, Policy, MediaLibrary, Queue, Mail Job, Scout, vb.) proje içinde deneyimlemek.
+* GitHub Actions ile CI süreçlerini öğrenmek.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## ⚙️ Backend Stack & Kullanılan Teknolojiler
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+* **Laravel 12 (minimal kurulum)**
+* **MySQL**
+* **Auth:** Breeze + Sanctum (cookie tabanlı)
+* **Queue:** database (→ Redis'e geçilecek)
+* **Test:** PHPUnit + Pest
+* **API Format:** Standart JSON:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+  ```json
+  { "data": {...}, "meta": { "message":"ok", "page":1 } }
+  ```
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 📦 Kullanılan Paketler
 
-### Premium Partners
+| Paket                           | Amaç                                 |
+| ------------------------------- | ------------------------------------ |
+| `spatie/laravel-permission`     | Rol & yetki kontrolü                 |
+| `spatie/laravel-medialibrary`   | Dosya (görsel) yükleme               |
+| `laravel/scout` + `meilisearch` | Arama motoru (full-text)             |
+| `laravel/horizon` & `telescope` | Kuyruk ve HTTP gözlemleme (devtools) |
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 🧱 Proje Mimarisi (Backend)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+app/
+├── Models/                // Eloquent modelleri
+├── Services/              // Tüm iş mantığı (business logic)
+├── Http/
+│   ├── Controllers/Api/   // Sadece API için controller'lar
+│   ├── Requests/          // Form Request → validasyon
+│   └── Middleware/
+├── Policies/              // Yetki kontrolleri
+├── Resources/             // API response JSON formatlayıcı
+routes/
+├── api.php                // API endpoint'leri
+tests/
+├── Feature/               // API testleri (CRUD, auth, flow…)
+```
 
-## Code of Conduct
+Her bileşen net şekilde ayrılmıştır. Tüm mantık Controller’da değil, **Service katmanında** bulunur.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🧪 Test & CI Süreci
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* Her özellik için `Feature Test` yazılmıştır.
+* **Cart**, **Product**, **Order** işlemleri uçtan uca test edilmiştir.
+* `pestphp/pest` ile sade syntax’a geçiş hedeflenmektedir.
+* GitHub Actions ile tüm PR’larda testler otomatik çalışır.
+* `php artisan test` komutu ile lokalde testler çalıştırılabilir.
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🚀 Sprint Planı (Yalnızca Backend Aşamaları)
+
+| Sprint | Konu                                        | Durum |
+| ------ | ------------------------------------------- | ----- |
+| **S0** | Auth (Breeze + Sanctum + CSRF)              | ✅     |
+| **S1** | Category & Product modeli, migration        | ✅     |
+| **S2** | Product CRUD + Policy + Service + Test      | ✅     |
+| **S3** | Cart & CartItem işlemleri (servis, test)    | ✅     |
+| **S4** | Sipariş: stok düşme, mail job kuyruğa girme | ✅     |
+| **S5** | Görsel yükleme (Spatie MediaLibrary)        | 🔜    |
+| **S6** | Rol-izin sistemi (admin/vendor/customer)    | ⏳     |
+| **S7** | Pest'e geçiş + Coverage ≥ %80               | ⏳     |
+| **S8** | Scout + Meilisearch ile full-text arama     | ⏳     |
+| **S9** | Horizon & Telescope kurulumu                | ⏳     |
+
+---
+
+## 📚 Öğrendiklerim / Kazanımlarım
+
+Bu proje ile Laravel'de:
+
+* Service Layer mimarisini,
+* API yazım kurallarını (validation, response, policy),
+* Job ve Mail Queue yönetimini,
+* Queue monitoring (Horizon), HTTP log takibi (Telescope),
+* Test-first mantığı ile API endpoint geliştirmeyi,
+* GitHub Actions ile CI pipeline kurulumunu,
+* Medya dosya yönetimi ve full-text arama entegrasyonunu öğrendim.
+
+---
+
+## ⛔️ Notlar
+
+* Bu repo sadece **API + Backend** geliştirmesini içerir.
+* Frontend: Sadece Breeze kurulu. (Vue tarafı boş)
+* Proje, test edilebilir, genişletilebilir mimari yapıya sahiptir.
+
+---
+
