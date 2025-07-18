@@ -82,11 +82,11 @@ Her bileşen net şekilde ayrılmıştır. Tüm mantık Controller’da değil, 
 | **S2** | Product CRUD + Policy + Service + Test      | ✅     |
 | **S3** | Cart & CartItem işlemleri (servis, test)    | ✅     |
 | **S4** | Sipariş: stok düşme, mail job kuyruğa girme | ✅     |
-| **S5** | Görsel yükleme (Spatie MediaLibrary)        | 🔜    |
-| **S6** | Rol-izin sistemi (admin/vendor/customer)    | ⏳     |
-| **S7** | Pest'e geçiş + Coverage ≥ %80               | ⏳     |
-| **S8** | Scout + Meilisearch ile full-text arama     | ⏳     |
-| **S9** | Horizon & Telescope kurulumu                | ⏳     |
+| **S5** | Görsel yükleme (Spatie MediaLibrary)        | ✅     |
+| **S6** | Rol-izin sistemi (admin/vendor/customer)    | ✅     |
+| **S7** | Pest'e geçiş + Coverage ≥ %80               | 🔜     |
+| **S8** | Scout + Meilisearch ile full-text arama     | ⏳      |
+| **S9** | Horizon & Telescope kurulumu                | ⏳      |
 
 ---
 
