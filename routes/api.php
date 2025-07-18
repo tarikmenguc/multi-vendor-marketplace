@@ -29,3 +29,6 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post('/products/{product}/image', [ProductController::class, 'uploadImage']);
+Route::middleware(['auth:sanctum', 'role:admin'])->get('/admin-only', function () {
+    return response()->json(['message' => 'Sadece admin erişti.']);
+});
