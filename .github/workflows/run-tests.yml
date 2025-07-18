@@ -10,7 +10,7 @@ jobs:
       mysql:
         image: mysql:8
         env:
-          MYSQL_ROOT_PASSWORD: password
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes 
           MYSQL_DATABASE: testing
         ports:
           - 3306:3306
