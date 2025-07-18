@@ -27,3 +27,5 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/orders', [OrderController::class, 'store']);
 });
+
+Route::post('/products/{product}/image', [ProductController::class, 'uploadImage']);
